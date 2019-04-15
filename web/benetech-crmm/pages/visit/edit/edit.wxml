@@ -1,0 +1,171 @@
+<!--pages/visit/edit/edit.wxml-->
+<view>
+  <wux-cell-group title="客户详情" class="visit-info">
+    <wux-cell hover-class="none" title="医院" extra="{{formData.hospital}}" />
+    <wux-cell hover-class="none" title="医生" extra="{{formData.doctor}}" />
+    <wux-cell hover-class="none" title="产品" extra="{{formData.product}}" />
+    <wux-cell is-link title="拜访目的" extra="{{ purposeTitle }} 项" bind:click="purposeSelect" />
+    <wux-cell wx:if="{{isConference}}" is-link title="会议类型" extra="{{ conferenceTypeTitle }}" bind:click="conferenceTypeSelect" />
+    <!-- <wux-cell hover-class="none" title="产品" extra="{{formData.product}}" /> -->
+    <wux-cell title="计划开始时间" extra="{{ formData.planStartTime }}" />
+    <wux-cell wx:if="{{isStarted}}" title="实际开始时间" extra="{{ formData.actualStartTime }}" />
+    <wux-cell wx:if="{{isEnded}}" title="实际结束时间" extra="{{ formData.actualEndtTime }}" />
+    <wux-cell wx:if="{{!isStarted || !isEnded}}" hover-class="none">
+      <view class="row justify-center">
+        <view class="col-4">
+          <wux-button block type="stable" bindtap="cancleEdit">取消</wux-button>
+        </view>
+        <view class="col-4 wux-ml--20">
+          <wux-button wx:if="{{!isStarted}}" block type="balanced" bindtap="startVisit">开始拜访</wux-button>
+          <wux-button wx:if="{{isStarted && !isEnded}}" block type="calm" bindtap="endVisit">结束拜访</wux-button>
+        </view>
+      </view>
+    </wux-cell>
+  </wux-cell-group>
+
+
+  <view wx:if="{{isStarted && isEnded}}">
+    <wux-white-space size="large" body-style="background: #e6e6e6;" />
+    <wux-card full="{{ true }}" title="拜访结果">
+      <view slot="body">
+        <wux-cell-group wx:if="{{isAskingBusiness}}" title="要求生意">
+          <wux-cell is-link title="要求生意达成与否" extra="{{ askingBusinessTitle }}" bind:click="reachSelect" data-flag="isAskingBusinessAgree" data-key="askingBusiness" data-title="askingBusinessTitle" data-values="askingBusinessResetValues" data-wuxselecttitle="要求生意达成与否" />
+          <block wx:if="{{isAskingBusinessAgree !== null && isAskingBusinessAgree}}">
+            <!-- <wux-cell title="每次门诊选择病人" hover-class="none">
+              <view slot="footer">
+                <wux-input-number controlled class="inline-block" min="0" color="light" value="{{formData.askingBusinessPatient}}" bind:change="inputChange" data-key="askingBusinessPatient" />
+                <text> 病人</text>
+              </view>
+            </wux-cell> -->
+            <wux-cell title="每次门诊选择病人" hover-class="none">
+              <view slot="footer">
+                <wux-input-number controlled class="inline-block" min="0" color="light" value="{{formData.askingBusinessPatientNumber}}" bind:change="inputChange" data-key="askingBusinessPatientNumber" />
+                <text> 例</text>
+              </view>
+            </wux-cell>
+            <wux-cell title="每例处方" hover-class="none">
+              <view slot="footer">
+                <wux-input-number controlled class="inline-block" min="0" color="light" value="{{formData.askingBusinessBox}}" bind:change="inputChange" data-key="askingBusinessBox" />
+                <text> 盒</text>
+              </view>
+            </wux-cell>
+            <wux-cell title="每月门诊" hover-class="none">
+              <view slot="footer">
+                <wux-input-number controlled class="inline-block" min="0" color="light" value="{{formData.askingBusinessOutpatient}}" bind:change="inputChange" data-key="askingBusinessOutpatient" />
+                <text> 次</text>
+              </view>
+            </wux-cell>
+            <wux-cell title="合计增加销售" hover-class="none" extra="{{askingBusinessSales}} 盒" />
+          </block>
+          <block wx:if="{{isAskingBusinessAgree !== null && !isAskingBusinessAgree}}">
+            <wux-cell is-link title="不认可的产品观念" extra="{{ askingBusinessDisapprovalTitle }} 项" bind:click="disapprovalSelect" data-key="askingBusinessDisapproval" data-title="askingBusinessDisapprovalTitle" />
+            <wux-cell is-link title="学术支持" extra="{{ askingBusinessSupportTitle }} 项" bind:click="supportResultSelect" data-key="askingBusinessSupport" data-title="askingBusinessSupportTitle" />
+          </block>
+        </wux-cell-group>
+
+        <wux-cell-group wx:if="{{isEstimateBusiness}}" title="评估生意">
+          <wux-cell is-link title="评估生意达成与否" extra="{{ estimateBusinessTitle }}" bind:click="reachSelect" data-flag="isEstimateBusinessAgree" data-key="estimateBusiness" data-title="estimateBusinessTitle" data-values="estimateBusinessResetValues" data-wuxselecttitle="评估生意达成与否" />
+          <block wx:if="{{isEstimateBusinessAgree !== null && isEstimateBusinessAgree}}">
+            <!-- <wux-cell title="每次门诊选择病人" hover-class="none">
+              <view slot="footer">
+                <wux-input-number controlled class="inline-block" min="0" color="light" value="{{formData.estimateBusinessPatient}}" bind:change="inputChange" data-key="estimateBusinessPatient" />
+                <text> 病人</text>
+              </view>
+            </wux-cell> -->
+            <wux-cell title="每次门诊选择病人" hover-class="none">
+              <view slot="footer">
+                <wux-input-number controlled class="inline-block" min="0" color="light" value="{{formData.estimateBusinessPatientNumber}}" bind:change="inputChange" data-key="estimateBusinessPatientNumber" />
+                <text> 例</text>
+              </view>
+            </wux-cell>
+            <wux-cell title="每例处方" hover-class="none">
+              <view slot="footer">
+                <wux-input-number controlled class="inline-block" min="0" color="light" value="{{formData.estimateBusinessBox}}" bind:change="inputChange" data-key="estimateBusinessBox" />
+                <text> 盒</text>
+              </view>
+            </wux-cell>
+            <wux-cell title="每月门诊" hover-class="none">
+              <view slot="footer">
+                <wux-input-number controlled class="inline-block" min="0" color="light" value="{{formData.estimateBusinessOutpatient}}" bind:change="inputChange" data-key="estimateBusinessOutpatient" />
+                <text> 次</text>
+              </view>
+            </wux-cell>
+            <wux-cell title="合计增加销售" hover-class="none" extra="{{estimateBusinessSales}}" />
+          </block>
+          <block wx:if="{{isEstimateBusinessAgree !== null && !isEstimateBusinessAgree}}">
+            <wux-cell is-link title="不认可的产品观念" extra="{{ estimateBusinessDisapprovalTitle }} 项" bind:click="disapprovalSelect" data-key="estimateBusinessDisapproval" data-title="estimateBusinessDisapprovalTitle" />
+            <wux-cell is-link title="学术支持" extra="{{ estimateBusinessSupportTitle }} 项" bind:click="supportResultSelect" data-key="estimateBusinessSupport" data-title="estimateBusinessSupportTitle" />
+          </block>
+        </wux-cell-group>
+
+        <wux-cell-group wx:if="{{isConference}}" title="邀请参会">
+          <wux-cell is-link title="邀请参会同意与否" extra="{{ conferenceResultTitle }}" bind:click="agreementSelect" data-key="conferenceResult" data-title="conferenceResultTitle" data-wuxselecttitle="邀请参会同意与否" />
+        </wux-cell-group>
+
+        <wux-cell-group wx:if="{{isChairman}}" title="邀请主席">
+          <wux-cell is-link title="邀请主席同意与否" extra="{{ chairmanResultTitle }}" bind:click="agreementSelect" data-key="chairmanResult" data-title="chairmanResultTitle" data-wuxselecttitle="邀请主席同意与否" />
+        </wux-cell-group>
+
+        <wux-cell-group wx:if="{{isSpeaker}}" title="邀请讲者">
+          <wux-cell is-link title="邀请讲者同意与否" extra="{{ speakerResultTitle }}" bind:click="agreementSelect" data-key="speakerResult" data-title="speakerResultTitle" data-wuxselecttitle="邀请讲者同意与否" />
+        </wux-cell-group>
+
+        <wux-cell-group wx:if="{{isOrganizer}}" title="邀请组织者">
+          <wux-cell is-link title="邀请组织者同意与否" extra="{{ organizerResultTitle }}" bind:click="agreementSelect" data-key="organizerResult" data-title="organizerResultTitle" data-wuxselecttitle="邀请组织者同意与否" />
+        </wux-cell-group>
+
+        <wux-cell-group wx:if="{{isConveyIdeas}}" title="传递观念">
+          <wux-cell is-link title="传递观念" extra="{{ conveyIdeasTitle }}" bind:click="openPopupConveyIdeas" data-key="conveyIdeas" data-title="conveyIdeasTitle" data-wuxselecttitle="传递观念" />
+        </wux-cell-group>
+
+        <view wx:if="{{!isFinished}}" class="row justify-center">
+          <view class="col-4">
+            <wux-button block type="stable" bindtap="cancleEdit">取消</wux-button>
+          </view>
+          <view class="col-4 wux-ml--20">
+            <wux-button wx:if="{{!isFinished}}" block type="balanced" bindtap="finishVisit">完成拜访</wux-button>
+          </view>
+        </view>
+      </view>
+    </wux-card>
+  </view>
+
+
+</view>
+<!-- <wux-popup position="bottom" visible="{{ isVisible }}" bind:close="popupClose">
+  <wux-cell-group title="客户详情">
+    <wux-cell wx:for="{{ clientLists }}" wx:key="" hover-class="none" title="医院" extra="{{formData.hospital}}" />
+  </wux-cell-group>
+</wux-popup> -->
+
+<!-- 拜访目的 -->
+<wux-select id="purpose" class="data-frozen" />
+
+<!-- 会议类型 -->
+<wux-select id="conferenceType" class="data-frozen" />
+
+<!-- 客情关系 -->
+<wux-select id="customerRelationship" class="data-frozen" />
+
+<!-- 达成与否 -->
+<wux-select id="reach" class="{{isFinished ? 'data-frozen': ''}}" />
+
+<!-- 同意与否 -->
+<wux-select id="agreement" class="{{isFinished ? 'data-frozen': ''}}" />
+
+<!-- 要求生意【未达成】 不认可的产品观念 -->
+<wux-select id="disapproval" class="{{isFinished ? 'data-frozen': ''}}" />
+
+<!-- 学术支持 -->
+<wux-select id="support" class="{{isFinished ? 'data-frozen': ''}}" />
+
+<!-- 传递观念 -->
+<wux-popup class="convey-ideas" closable position="bottom" visible="{{ isConveyIdeasVisible }}" bind:close="closePopupConveyIdeas">
+  <view class="convey-ideas-wrap">
+    <wux-cell-group title="传递观念" class="">
+      <wux-cell wx:for="{{optionEvaluate}}" wx:key="" wx:for-index="index" title="{{optionEvaluate[index].title}}">
+        <wux-switch data-index="{{index}}" slot="footer" value="{{ conveyIdeas[index] }}" bind:change="conveyIdeasChange" />
+      </wux-cell>
+    </wux-cell-group>
+  </view>
+</wux-popup>

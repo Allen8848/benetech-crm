@@ -1,0 +1,40 @@
+/* pages/visit/edit/edit.wxss */
+.data-frozen button {
+  pointer-events: none;
+}
+
+.convey-ideas{
+  max-height: 68vh;
+}
+
+.convey-ideas .wux-popup__close {
+  z-index: 2;
+}
+
+.convey-ideas-wrap{
+  position:relative;
+  padding-top:80rpx;
+  max-height: 68vh !important;
+  overflow-y: auto;
+}
+
+.convey-ideas-wrap .wux-cell-group__hd{
+  position:fixed;
+  top:0;
+  right:0;
+  left:0;
+  width:100vw;
+  z-index:1;
+  height:80rpx;
+  background:#fff;
+}
+
+.visit-info .wux-cell__bd > .wux-cell__text {
+  white-space: nowrap;
+}
+
+.visit-info .wux-cell__bd + .wux-cell__ft {
+  padding-left: 2em;
+}
+
+

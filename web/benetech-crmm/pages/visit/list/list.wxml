@@ -1,0 +1,97 @@
+<!--pages/visit/list/list.wxml-->
+
+<view class="container justify-between">
+  <wux-accordion-group class="list-accordion relative-position" accordion controlled current="{{ accordionData }}" bind:change="accordionChange" default-current="{{ ['1'] }}">
+    <wux-accordion title="拜访计划">
+      <wux-filterbar class="filterbar-visit" items="{{ visitFilterbarItems }}" bind:change="filterbarChange" />
+      <view class="row" wx:if="{{visitLists.length === 0}}">
+        <text class="col-12 list-item text-center ellipsis">暂无数据</text>
+      </view>
+      <block wx:else>
+        <view class="row list-visit" wx:for="{{ visitLists }}" wx:key="" data-id="{{item.id}}" bindtap="go2EditVisit">
+          <text class="list-item text-center ellipsis">{{item.doctor}}</text>
+          <text class="list-item text-center ellipsis">{{item.hospitalAlias ? item.hospitalAlias : item.hospital}}</text>
+          <text class="list-item text-center ellipsis">{{item.product}}</text>
+          <text class="list-item col-grow text-center ellipsis">{{item.planStartTime}}</text>
+        </view>
+      </block>
+      <view class="row" wx:if="{{!hasMoreDataVisit && visitLists.length !== 0}}">
+        <text class="col-12 list-item text-center ellipsis">没有更多内容啦</text>
+      </view>
+
+    </wux-accordion>
+    <wux-accordion title="客户情况分析">
+      <wux-search-bar clear maxlength="8" controlled value="{{ clientFilter }}" placeholder="搜索(医生、医院、产品，最多8个字)" bind:change="searchChange" bind:confirm="searchConfirm" bind:clear="searchClear" bind:cancel="searchCancel" />
+      <wux-filterbar class="filterbar-client" items="{{ clientFilterbarItems }}" bind:change="filterbarChange" />
+      <view class="row" wx:if="{{clientLists.length === 0}}">
+        <text class="col-12 list-item text-center ellipsis">{{isLoading? '加载中...': '暂无数据'}}</text>
+      </view>
+      <block wx:else>
+        <view class="row list-client" wx:for="{{ clientLists }}" wx:key="" data-client="{{item}}" bindtap="going2AddVisit">
+          <text class="list-item text-center ">{{item.doctor}}</text>
+          <text class="list-item text-center ">{{item.hospitalAlias ? item.hospitalAlias : item.hospital}}</text>
+          <text class="list-item text-center ">{{item.product}}(盒)</text>
+          <text class="list-item text-center ">{{item.potential}}</text>
+          <text class="list-item text-center ">{{item.currentDosage}}</text>
+          <text class="list-item text-center ">{{item.targetDosage}}</text>
+          <!-- <text class="list-item text-center ellipsis">{{item.targetDosage}}</text> -->
+        </view>
+      </block>
+      <view class="row" wx:if="{{!hasMoreDataClient && clientLists.length !== 0}}">
+        <text class="col-12 list-item text-center ellipsis">没有更多内容啦</text>
+      </view>
+    </wux-accordion>
+  </wux-accordion-group>
+  <view wx:if='{{isRefreshing && accordionDataKey !== null}}' class="weui-loadmore self-center">
+    <view wx:if='{{isLoadingMoreData}}'>
+      <view class="weui-loading"></view>
+      <view class="weui-loadmore-tips">正在加载更多...</view>
+    </view>
+    <view wx:elif="{{(accordionDataKey === '0' && !hasMoreDataVisit) || (accordionDataKey === '1' && !hasMoreDataClient)}}">
+      <view class="weui-loadmore-tips" bindtap='onReachBottom'>点击加载更多</view>
+    </view>
+    <view wx:else>
+      <view class="weui-loadmore-tips">没有更多内容啦</view>
+    </view>
+  </view>
+</view>
+
+<wux-popup position="bottom" visible="{{ isVisible }}" bind:close="popupClose">
+  <wux-cell-group title="客户列表">
+    <wux-cell hover-class="none" title="医院" extra="{{formData.hospital}}" />
+    <wux-cell hover-class="none" title="医生" extra="{{formData.doctor}}" />
+    <wux-cell hover-class="none" title="产品" extra="{{formData.product}}" />
+    <wux-cell hover-class="none" title="潜力" extra="{{formData.potential}}" />
+    <wux-cell hover-class="none" title="目前用量" extra="{{formData.currentDosage}}" />
+    <wux-cell hover-class="none" title="目标用量" extra="{{formData.targetDosage}}" />
+    <wux-cell is-link title="拜访目的" extra="{{ purposeTitle }}" bind:click="purposeSelect" />
+    <wux-cell wx:if="{{isConferenceType}}" is-link title="会议类型" extra="{{ conferenceTypeTitle }}" bind:click="conferenceTypeSelect" />
+    <wux-cell is-link title="客情关系" extra="{{ customerRelationshipTitle }}" bind:click="customerRelationshipSelect" />
+    <wux-cell class="relative-position" is-link title="计划开始时间" extra="{{ planStartTimeTitle }}">
+      <picker class='absolute-top full-height' mode="multiSelector" value="{{dateTimeChosen}}" bindchange="changeDateTime" bindcolumnchange="changeDateTimeColumn" range="{{dateTimeOptions}}">
+        <view class=" absolute-top full-height" style="z-index: 1;" />
+      </picker>
+    </wux-cell>
+    <wux-cell hover-class="none">
+      <view class="row justify-center">
+        <view class="col-4">
+          <wux-button block type="stable" bindtap="popupClose">取消</wux-button>
+        </view>
+        <view class="col-4 wux-ml--20">
+          <wux-button block type="balanced" disabled="{{isAdding}}" loading="{{isAdding}}" bindtap="addVisit">计划拜访</wux-button>
+        </view>
+      </view>
+    </wux-cell>
+  </wux-cell-group>
+</wux-popup>
+
+<wux-calendar id="wux-calendar" />
+
+<!-- 拜访目的 -->
+<wux-select id="purpose" />
+
+<!-- 会议类型 -->
+<wux-select id="conferenceType" />
+
+<!-- 客情关系 -->
+<wux-select id="customerRelationship" />
