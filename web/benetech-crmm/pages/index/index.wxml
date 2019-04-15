@@ -1,0 +1,18 @@
+<!--index.wxml-->
+<view class="container">
+  <wux-row class="">
+    <block wx:for="{{ links }}" wx:key="" wx:for-index="bindex" wx:if="{{(bindex == 1 && POST_PRIV == 1) || bindex != 1}}">
+      <wux-col span="3">
+        <view class="cell wux-text--center wux-mt--15">
+          <!-- <wux-icon class='wux-text--center' type="{{ 'md-' + item.icon }}" /> -->
+          <navigator
+            url="{{ item.url }}"
+          >
+            <wux-icon class='wux-text--center' type="{{ 'md-' + item.icon }}" />
+            <view class="title ">{{ item.title }}</view>
+          </navigator>
+        </view>
+      </wux-col>
+    </block>
+  </wux-row>
+</view>
