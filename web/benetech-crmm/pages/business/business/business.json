@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "商机管理",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "usingComponents": {
+    "wux-row": "../../../dist/row/index",
+    "wux-col": "../../../dist/col/index"
+  }
+}

@@ -1,0 +1,67 @@
+.today_ranking {
+  padding: 40rpx;
+  /* background: red; */
+  /* border:1px solid red; */
+}
+.today_ranking_title {
+text-align: center;
+color: rgba(54,137,255,1);
+font-size: 36rpx;
+
+}
+.iconfont {
+  height: 22rpx;
+  width: 100%;
+}
+.num1 {
+  width: 88rpx;
+  display: block;
+  height: 98rpx;
+  margin: 40rpx auto;
+}
+.numPercentage {
+    width: 145rpx;
+  display: block;
+  height:50rpx;
+  margin: 30rpx auto;
+  color:rgba(255,105,150,1);
+  text-align: center;
+}
+.gn_detail {
+  width: 100%;
+  color: rgba(51,51,51,1);
+  font-size: 28rpx;
+/* padding-bottom:40rpx; */
+  
+}
+.gn_detaill {
+   flex: 2;
+  color: rgba(51,51,51,1);
+  font-size: 28rpx;
+  /* padding: 40rpx 0; */
+/* padding-bottom:40rpx; */
+}
+.lis {
+  padding-bottom: 40rpx;
+border-bottom: 1px dashed rgba(216,216,216,1);
+}
+.lis:nth-last-child(1) {
+  border-bottom: none;
+}
+
+.liss {
+  display: flex;
+  align-items:center;
+   /* border-bottom: 1px dashed rgba(216,216,216,1); */
+}
+.liss .numPercentage {
+  flex: 1;
+  vertical-align: middle;
+}
+.noData {
+  height: 50rpx;
+  line-height: 50rpx;
+  text-align: center;
+  display: block;
+color: rgba(51,51,51,1); 
+}

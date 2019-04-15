@@ -1,0 +1,43 @@
+
+<view class='today_ranking'>
+
+<view class='today_ranking_title'>
+今日拜访客户传递观念认可度排名
+</view>
+<!-- 1 -->
+<view class='lis' wx:if="{{topThree[0].ConceptText !== undefined}}">
+<image src='../../../images/a1.png'   class='num1'  mode="aspectFit"></image>
+<view class='numPercentage'>{{topThree[0].summat+'%'}}</view>
+<view class='numPercentage'>{{ 'Top 1' }}</view>
+<view class='gn_detail'>{{ topThree[0].ConceptText }}</view>
+</view>
+<!-- 2 -->
+<view class='lis' wx:if="{{topThree[1].ConceptText !== undefined}}">
+<image src='../../../images/a2.png'   class='num1'  mode="aspectFit"></image>
+<view class='numPercentage'>{{topThree[1].summat+'%'}}</view>
+<view class='numPercentage'>{{ 'Top 2' }}</view>
+<view class='gn_detail'>{{ topThree[1].ConceptText }}</view>
+</view>
+<!-- 3 -->
+<view class='lis' wx:if="{{topThree[2].ConceptText !== undefined}}">
+<image src='../../../images/a3.png'   class='num1'  mode="aspectFit"></image>
+<view class='numPercentage'>{{topThree[2].summat+'%'}}</view>
+<view class='numPercentage'>{{ 'Top 3' }}</view>
+<view class='gn_detail'>{{ topThree[2].ConceptText }}</view>
+</view>
+<!-- for -->
+
+<view class='lis' wx:for="{{concept}}" wx:key="{{index}}"  wx:if="{{concept.length > 0}}">
+<view class='numPercentage'>{{ 'Top '+(index+4) }}</view>
+<view class='liss'>
+<view class='gn_detaill'> {{item.ConceptText}}  </view>
+<view class='numPercentage'>{{item.summat+'%'}} </view>
+</view>
+</view>
+
+<!-- for -->         
+      <view class='noData' wx:if='{{tipPM}}'>
+      暂无排名
+      </view>      
+<!-- end -->
+</view>

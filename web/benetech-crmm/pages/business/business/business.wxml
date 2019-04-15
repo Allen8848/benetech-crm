@@ -1,0 +1,191 @@
+<view class="body">
+ <view class="nav bc_white">
+  <view class="{{selected?'red':'default'}}" bindtap="selected">今日销售分析</view>
+  <view class="{{selected1?'red':'default'}}" bindtap="selected1">截止今日销售分析</view>
+ </view>
+ <view class="{{selected?'show':'hidden'}}">
+ <!-- 今日销售分析 -->
+<view  class='send_analyze'>
+<view class='send_zql'>
+<!-- 1 -->
+<image src='../../../images/bg1.png'    mode="aspectFit"></image>
+<view class='visitor_zql'>
+ <text  class='{{nin ? "showw" : "hidee"}}'>您团队,</text>今日拜访客户的总潜力与您所有客户总潜力的占比
+</view>
+<text class='percentage'>{{PotentialQuantity+'%'}}</text>
+</view>
+<!-- 2 -->
+<view  wx:if="{{CRRating >0}}" class='send_zql {{customerRate ? "show" : "hide"}}'>
+<image src='../../../images/bg2.png'    mode="aspectFit"></image>
+<view class='visitor_zql'>
+<text  class='{{nin ? "showw" : "hidee"}}'>您团队,</text>今日拜访客户中，客情评级在3级（含3级）以上占比
+</view>
+<text class='percentage percentageTwo'>{{CRRating+'%'}}</text>
+<view class='visitor_zql_gx'> 
+<image src='../../../images/b2.png'    mode="aspectFit" class='zan'></image> 
+ <text> 恭喜</text></view>
+</view>
+<!-- 22 -->
+<view   class='send_zql {{customerRate ? "hide" : "show"}}'>
+<image src='../../../images/bg4.png'    mode="aspectFit"></image>
+<view class='visitor_zql'>
+<text  class='{{nin ? "showw" : "hidee"}}'>您团队,</text>今日拜访客户中，客情评级在3级（含3级）以上占比
+</view>
+<text class='percentage percentageTwo'>{{CRRating+'%'}}</text>
+<view class='visitor_zql_gx visitor_zql_gxbb'> 
+ <text > 继续加油</text></view>
+</view>
+<!-- 3 -->
+<view class='send_zql'>
+<image src='../../../images/bg1.png'    mode="aspectFit"></image>
+<view class='visitor_zql'>
+<text  class='{{nin ? "showw" : "hidee"}}'>您团队,</text>今日拜访客户中，要求生意达成量与本月目标用量的占比
+</view>
+<text class='percentage'>{{AskQuantity+'%'}}</text>
+</view>
+<view class='send_zql'>
+<!-- 4 -->
+<image src='../../../images/bg1.png'    mode="aspectFit"></image>
+<view class='visitor_zql'>
+<text  class='{{nin ? "showw" : "hidee"}}'>您团队,</text>今日拜访客户中，要求生意达成成功率
+</view>
+<text class='percentage'>{{IsAskBiz+'%'}}</text>
+</view>
+<view class='send_zql'>
+<!-- 5 -->
+<image src='../../../images/bg1.png'    mode="aspectFit"></image>
+<view class='visitor_zql'>
+<text  class='{{nin ? "showw" : "hidee"}}'>您团队,</text>今日拜访客户中，评估生意达成量与本月目标用量的占比
+</view>
+<text class='percentage'>{{EvalBizQuantity+'%'}}</text>
+</view>
+<view class='send_zql'>
+<!-- 6 -->
+<image src='../../../images/bg1.png'    mode="aspectFit"></image>
+<view class='visitor_zql'>
+<text  class='{{nin ? "showw" : "hidee"}}'>您团队,</text>今日拜访客户中，评估生意达成成功率
+</view>
+<text class='percentage'>{{IsEvalBiz+'%'}}</text>
+</view>
+
+<!-- last -->
+<view  class='send_zql last_detail {{showviewTotal ? "show" : "hide"}}'>
+<image src='../../../images/bg3.png'    mode="aspectFit"></image>
+<view class='achievingRate'><text  class='{{nin ? "showw" : "hidee"}}'>您团队,</text>今日拜访客户中，结论达成率</view>
+<view class='achievingRatePercentage'>{{verdicts+'%'}}</view>
+<view class='clientele'><text  class='{{nin ? "showw" : "hidee"}}'>您团队,</text>今日拜访新客户数量</view>
+<view class='clienteleNumber'>{{IsNew}}</view>
+<view class='colorWhite'></view>
+<view class='visitor_zql_gxx'> 
+<image src='../../../images/b2.png'    mode="aspectFit" class='zan'></image> 
+ <text> 很 棒</text></view>
+</view>
+<!-- last two -->
+<view  class='send_zql last_detail {{showviewTotaltwo  ? "show" : "hide"}}'>
+<image src='../../../images/bg5.png'    mode="aspectFit"></image>
+<view class='achievingRate'><text  class='{{nin ? "showw" : "hidee"}}'>您团队,</text>今日拜访客户中，结论达成率</view>
+<view class='achievingRatePercentage'>{{verdicts+'%'}}</view>
+<view class='clientele'><text  class='{{nin ? "showw" : "hidee"}}'>您团队,</text>今日拜访新客户数量</view>
+<view class='clienteleNumber'>{{IsNew}}</view>
+<view class='colorWhite'></view>
+<view  class='visitor_zql_gxx'> 
+<image src='../../../images/b2.png'    mode="aspectFit" class='zan'></image>  
+ <text> 点 赞</text>
+ </view>
+</view>
+<!-- last three -->
+<view  class='send_zql last_detail {{showviewTotalthree  ? "show" : "hide"}}'>
+<image src='../../../images/bg5.png'    mode="aspectFit"></image>
+<view class='achievingRate'><text  class='{{nin ? "showw" : "hidee"}}'>您团队,</text>今日拜访客户中，结论达成率</view>
+<view class='achievingRatePercentage'>{{verdicts+'%'}}</view>
+<view class='clientele'><text  class='{{nin ? "showw" : "hidee"}}'>您团队,</text>今日拜访新客户数量</view>
+<view class='clienteleNumber'>{{IsNew}}</view>
+<view class='colorWhite'></view>
+
+ <view class='visitor_zql_gxx b58'> 
+ <text> 继续加油</text>
+ </view>
+</view>
+<!-- 7 -->
+<navigator url="../todayRanking/todayRanking">
+<view class='send_zql rankingList'>
+<image src='../../../images/bg7.png'    mode="scaleToFill"></image>
+<image src='../../../images/b1.png'    mode="aspectFit" class='trophy'></image>
+<text class='percentagePm'> 查看拜访客户传递观念认可度排名 </text>
+</view>
+</navigator>
+
+</view> 
+  <!-- 今日销售分析 end -->
+ </view>
+ <view class="{{selected1?'show':'hidden'}}">
+ 
+ <!-- 截止 -->
+
+<view  class='send_analyze'>
+<!-- 1 -->
+<view class='send_zql'>
+<image src='../../../images/bg1.png'    mode="aspectFit"></image>
+<view class='visitor_zql'>
+ <text  class='{{nin ? "showw" : "hidee"}}'>您团队,</text>截止今日您本月所拜访的客户合计到月底为您带来的销量
+</view>
+<text class='percentage'>{{ sales }}</text>
+</view>
+<!-- 2 -->
+<view class='send_zql'>
+<image src='../../../images/bg1.png'    mode="aspectFit"></image>
+<view class='visitor_zql'>
+ <text  class='{{nin ? "showw" : "hidee"}}'>您团队,</text>截止今日您本月所拜访的客户总销量与目标销量的差距
+</view>
+<text class='percentage'>{{gap}}</text>
+</view>
+<!-- 3-->
+<view class='send_zql'>
+<image src='../../../images/bg1.png'    mode="aspectFit"></image>
+<view class='visitor_zql'>
+ <text  class='{{nin ? "showw" : "hidee"}}'>您团队,</text>截止今日您本月所拜访的客户潜力与您所有客户潜力占比
+</view>
+<text class='percentage'>{{PotentialQuantity*100 + '%'}}</text>
+</view>
+<!-- 4 -->
+<view wx:if='{{schedule != 0}}'  class='send_zql {{showview ? "show" : "hide"}}'>
+<image src='../../../images/bg2.png'    mode="aspectFit"></image>
+<view class='visitor_zql p23'>
+ <text  class='{{nin ? "showw" : "hidee"}}'>您团队,</text>截止今日您本月所拜访的客户销量与您本月目标销量的占比 
+<view class='gxnydb'>“恭喜您已达标，向优秀的您致敬”</view>
+</view>
+<text class='percentage percentageTwo'>{{schedule + '%' }}</text>
+<view class='visitor_zql_gx'> 
+<image src='../../../images/b2.png'    mode="aspectFit" class='zan'></image> 
+ <text> 恭喜</text></view>
+</view>
+<!-- 44 -->
+<view wx:if='{{schedule != 0}}'   class='send_zql {{showview ? "hide" : "show"}}'>
+<image src='../../../images/bg4.png'    mode="aspectFit"></image>
+<view class='visitor_zql p23'>
+ <text  class='{{nin ? "showw" : "hidee"}}'>您团队,</text>截止今日您本月所拜访的客户销量与您本月目标销量的占比
+ <text class='gxnydb'> “尚需努力，加油”</text>
+</view>
+<text class='percentage percentageTwo'>{{schedule + '%'}}</text>
+<view class='visitor_zql_gx visitor_zql_gxbb'> 
+ <text > 继续加油</text></view>
+</view>
+</view >
+
+  
+
+
+
+
+
+
+
+
+
+
+<!-- 截止 end -->
+ 
+ </view>
+
+
+</view>
