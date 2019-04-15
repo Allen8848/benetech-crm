@@ -1,0 +1,99 @@
+<!--pages/visit/list/list.wxml-->
+
+<view class="container justify-between">
+  <wux-accordion-group accordion controlled current="{{ accordionData }}" bind:change="accordionChange" default-current="{{ ['0'] }}">
+    <wux-accordion title="我的协访计划">
+      <wux-filterbar class="filterbar-covisit" items="{{ coVisitFilterbarItems }}" bind:change="filterbarChange" />
+      <view class="row" wx:if="{{coVisitLists.length === 0}}">
+        <text class="col-12 list-item text-center ellipsis">暂无数据</text>
+      </view>
+      <block wx:else>
+        <view class="row list-covisit" wx:for="{{ coVisitLists }}" wx:key="" data-id="{{item.id}}" bindtap="go2EditCoVisit">
+          <text class="list-item text-center ellipsis">{{item.doctorName}}</text>
+          <text class="list-item text-center ellipsis">{{item.hospitalAlias ? item.hospitalAlias : item.hospitalName}}</text>
+          <text class="list-item text-center ellipsis">{{item.subordinateName}}</text>
+          <text class="list-item text-center ellipsis">{{item.planStartTime}}</text>
+        </view>
+      </block>
+      <view class="row" wx:if="{{!hasMoreDataCoVisit && coVisitLists.length !== 0}}">
+        <text class="col-12 list-item text-center ellipsis">没有更多内容啦</text>
+      </view>
+    </wux-accordion>
+    <wux-accordion title="我下属的拜访计划">
+      <wux-filterbar class="filterbar-visit" items="{{ visitFilterbarItems }}" bind:change="filterbarChange" />
+      <view class="row" wx:if="{{visitLists.length === 0}}">
+        <text class="col-12 list-item text-center ellipsis">{{isLoading? '加载中...': '暂无数据'}}</text>
+      </view>
+      <block wx:else>
+        <view class="row list-visit" wx:for="{{ visitLists }}" wx:key=""  data-visit="{{item}}" bindtap="going2AddCoVisit">
+          <text class="list-item text-center ellipsis">{{item.daibiao}}</text>
+          <text class="list-item text-center ellipsis">{{item.doctor}}</text>
+          <text class="list-item text-center ellipsis">{{item.hospitalAlias ? item.hospitalAlias : item.hospital}}</text>
+          <text class="list-item text-center ellipsis">{{item.product}}</text>
+          <text class="list-item text-center ellipsis">{{item.planStartTime}}</text>
+        </view>
+      </block>
+      <view class="row" wx:if="{{!hasMoreDataVisit && visitLists.length !== 0}}">
+        <text class="col-12 list-item text-center ellipsis">没有更多内容啦</text>
+      </view>
+    </wux-accordion>
+  </wux-accordion-group>
+  <view wx:if='{{isRefreshing && accordionDataKey !== null}}' class="weui-loadmore self-center">
+    <view wx:if='{{isLoadingMoreData}}'>
+      <view class="weui-loading"></view>
+      <view class="weui-loadmore-tips">正在加载更多...</view>
+    </view>
+    <view wx:elif="{{(accordionDataKey === '0' && hasMoreDataCoVisit) || (accordionDataKey === '1' && hasMoreDataVisit)}}">
+      <view class="weui-loadmore-tips" bindtap='onReachBottom'>点击加载更多</view>
+    </view>
+    <view wx:else>
+      <view class="weui-loadmore-tips">没有更多内容啦hasMoreDataCoVisit = {{hasMoreDataCoVisit}}, hasMoreDataVisit = {{hasMoreDataVisit}}</view>
+    </view>
+  </view>
+</view>
+
+<wux-popup position="bottom" visible="{{ isVisible }}" bind:close="popupClose">
+  <wux-cell-group title="拜访详情">
+    <wux-cell hover-class="none" title="医院" extra="{{targetVistInfo.hospital}}" />
+    <wux-cell hover-class="none" title="医生" extra="{{targetVistInfo.doctor}}" />
+    <wux-cell hover-class="none" title="产品" extra="{{targetVistInfo.product}}" />
+    <wux-cell is-link title="拜访目的" extra="{{ targetVistInfo.purposeTitle }} 项" bind:click="purposeSelect" />
+    <wux-cell wx:if="{{targetVistInfo.isConference}}" is-link title="会议类型" extra="{{ targetVistInfo.conferenceTypeTitle }}" bind:click="conferenceTypeSelect" />
+    <wux-cell is-link title="客情关系" extra="{{ targetVistInfo.customerRelationshipTitle }}" bind:click="customerRelationshipSelect" />
+    <wux-cell hover-class="none" title="拜访计划开始时间" extra="{{ targetVistInfo.planStartTime }}" />
+  </wux-cell-group>
+  <wux-cell-group title="计划协访">
+    <wux-cell is-link title="协访目的" extra="{{ targetVistInfo.assistanceVisitPurposeTitle }} 项" bind:click="coPurposeSelect" />
+    <wux-cell hover-class="none" title="计划开始时间" extra="{{ targetVistInfo.planStartTime }}" />
+    <!-- <wux-cell class="relative-position" is-link title="计划开始时间" extra="{{ planStartTimeTitle }}">
+      <picker class='absolute-top full-height' mode="multiSelector" value="{{dateTimeChosen}}" bindchange="changeDateTime" bindcolumnchange="changeDateTimeColumn" range="{{dateTimeOptions}}">
+        <view class=" absolute-top full-height" style="z-index: 1;" />
+      </picker>
+    </wux-cell> -->
+    <wux-cell hover-class="none">
+      <view class="row justify-center">
+        <view class="col-4">
+          <wux-button block type="stable" bindtap="popupClose">取消</wux-button>
+        </view>
+        <view class="col-4 wux-ml--20">
+          <wux-button block type="balanced" disabled="{{isAdding}}" loading="{{isAdding}}" bindtap="addCoVisit">计划协访</wux-button>
+        </view>
+      </view>
+    </wux-cell>
+  </wux-cell-group>
+</wux-popup>
+
+
+<wux-calendar id="wux-calendar" />
+
+<!-- 拜访目的 -->
+<wux-select id="purpose" class="data-frozen" />
+
+<!-- 会议类型 -->
+<wux-select id="conferenceType" class="data-frozen" />
+
+<!-- 客情关系 -->
+<wux-select id="customerRelationship" class="data-frozen" />
+
+<!-- 协访目的 -->
+<wux-select id="coPurpose" />

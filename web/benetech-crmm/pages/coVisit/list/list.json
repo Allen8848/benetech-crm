@@ -1,0 +1,17 @@
+{
+  "navigationBarTitleText": "协访列表",
+  "usingComponents": {
+    "wux-filterbar": "../../../dist/filterbar/index",
+    "wux-row": "../../../dist/row/index",
+    "wux-col": "../../../dist/col/index",
+    "wux-accordion-group": "../../../dist/accordion-group/index",
+    "wux-accordion": "../../../dist/accordion/index",
+    "wux-cell-group": "../../../dist/cell-group/index",
+    "wux-cell": "../../../dist/cell/index",
+    "wux-button": "../../../dist/button/index",
+    "wux-popup": "../../../dist/popup/index",
+    "wux-select": "../../../dist/select/index",
+    "wux-calendar": "../../../dist/calendar/index",
+    "wux-search-bar": "../../../dist/search-bar/index"
+  }
+}

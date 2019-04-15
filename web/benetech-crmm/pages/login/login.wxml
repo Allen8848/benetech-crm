@@ -1,0 +1,40 @@
+<wux-result
+  wx:if="{{loginError}}"
+    icon="{{ resultIcon }}"
+    buttons="{{ resultButtons }}"
+    title="登录失败"
+    label="当前账号已经在其它设备绑定过，请联系管理员更换设置"
+    extra="盛蕴CRM"
+    bind:click="resultBack"
+    fixed
+/>
+<view wx:else class="container justify-center">
+  <view wx:if="{{loginFail}}">
+    <view class="userinfo wux-mb--20 wux-pb--20">
+      <!-- <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button> -->
+      <view wx:if="{{!hasUserInfo && canIUse}}" class="wux-pb--20 wux-mb--20">
+          <wux-cell-group title="登录到盛蕴CRM(非微信账号)">
+              <wux-cell hover-class="none">
+                  <wux-input placeholder="CRM账号(姓名拼音全称)" maxlength="20" controlled bind:change="inputChange" data-key="account" value="{{account}}" >
+                      <wux-icon color="#1AAD19" style="width: 20px; height: 20px; margin-right: 5px" size="24"type="ios-person" />
+                  </wux-input>
+              </wux-cell>
+              <!-- <wux-cell hover-class="none">
+                <wux-input placeholder="密码">
+                  <wux-icon style="width: 20px; height: 20px; margin-right: 5px" size="24" type="ios-lock" />
+                </wux-input>
+              </wux-cell> -->
+          </wux-cell-group>
+          <!-- <button open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button> -->
+          <button open-type="getUserInfo" bindgetuserinfo="getUserInfo" disabled="{{logging}}" class='wux-mt--20 wux-mb--20' style="width: 86%;margin-right:auto;margin-left: auto;" type="primary" loading="{{logging}}">登录{{ logging ? '中...' : '' }}</button>
+      </view>
+      <block wx:else>
+        <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+      </block>
+    </view>
+  </view>
+  <view wx:else class="column justify-center full-height">
+    <text class="full-width text-center">盛蕴CRM正在登录中...</text>
+  </view>
+</view>

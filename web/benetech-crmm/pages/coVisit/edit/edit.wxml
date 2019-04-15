@@ -1,0 +1,104 @@
+<!--pages/coVisit/edit/edit.wxml-->
+<wux-cell-group title="拜访详情(只能查看，不能更改)">
+  <wux-cell hover-class="none" title="医院" extra="{{targetVistInfo.hospital}}" />
+  <wux-cell hover-class="none" title="医生" extra="{{targetVistInfo.doctor}}" />
+  <wux-cell hover-class="none" title="产品" extra="{{targetVistInfo.product}}" />
+  <wux-cell is-link title="拜访目的" extra="{{ targetVistInfo.purposeTitle }} 项" bind:click="purposeSelect" />
+  <wux-cell wx:if="{{targetVistInfo.isConference}}" is-link title="会议类型" extra="{{ targetVistInfo.conferenceTypeTitle }}" bind:click="conferenceTypeSelect" />
+  <wux-cell is-link title="客情关系" extra="{{ targetVistInfo.customerRelationshipTitle }}" bind:click="customerRelationshipSelect" />
+  <wux-cell title="计划开始时间" extra="{{ targetVistInfo.planStartTime }}" />
+  <!-- <wux-cell title="实际开始时间" extra="{{ targetVistInfo.actualStartTime }}" /> -->
+  <!-- <wux-cell title="实际结束时间" extra="{{ targetVistInfo.actualEndtTime }}" /> -->
+</wux-cell-group>
+<wux-cell-group title="协访详情" class="wux-mt--20">
+  <wux-cell is-link title="协访目的" extra="{{ targetVistInfo.assistanceVisitPurposeTitle }} 项" bind:click="coPurposeSelect" />
+  <wux-cell class="relative-position" title="计划开始时间" extra="{{ formData.planStartTime }}" />
+  <wux-cell wx:if="{{isStarted}}" title="实际开始时间" extra="{{ formData.actualStartTime }}" />
+  <wux-cell wx:if="{{isEnded}}" title="实际结束时间" extra="{{ formData.actualEndTime }}" />
+  <wux-cell wx:if="{{!isStarted || !isEnded}}" hover-class="none">
+    <view class="row justify-center">
+      <view class="col-4">
+        <wux-button block type="stable" bindtap="cancleEdit">取消</wux-button>
+      </view>
+      <view class="col-4 wux-ml--20">
+        <wux-button wx:if="{{!isStarted}}" block type="balanced" bindtap="startCoVisit">开始协访</wux-button>
+        <wux-button wx:if="{{isStarted && !isEnded}}" block type="calm" bindtap="endCoVisit">结束协访</wux-button>
+      </view>
+    </view>
+  </wux-cell>
+</wux-cell-group>
+
+  <view wx:if="{{isStarted && isEnded}}">
+    <wux-white-space size="large" body-style="background: #e6e6e6;" />
+    <wux-card full="{{ true }}" title="协访结果">
+      <view slot="body">
+        <wux-cell-group wx:if="{{isCheckUpFlag}}" title="检查结果">
+          <wux-cell wx:for="{{optionCheckUpResult}}" wx:key="" wx:for-index="index" title="{{index + 1}}.{{optionCheckUpResult[index].name}}">
+            <wux-switch data-index="{{index}}" data-code="{{item.code}}" slot="footer" value="{{ checkUpResultChosen[index] }}" bind:change="checkUpResultChange" />
+          </wux-cell>
+          <!-- <wux-cell is-link title="检查结果" extra="{{ targetVistInfo.checkUpFlagTitle }}" bind:click="checkUpFlagSelect" /> -->
+          <!-- <block wx:if="{{isCheckUpFlagAgree !== null && isCheckUpFlagAgree}}">
+            <wux-cell is-link title="辅导内容" extra="{{ targetVistInfo.checkUpResultTitle }} 项" bind:click="checkUpResultSelect" />
+          </block> -->
+        </wux-cell-group>
+
+        <wux-cell-group wx:if="{{isAssistResult}}" title="辅导">
+          <wux-cell is-link title="辅导 (发现问题 - 解决问题)" extra="{{ targetVistInfo.assistResultTitle }} 项" bind:click="assistResultSelect" />
+        </wux-cell-group>
+
+        <wux-cell-group wx:if="{{isSolveReportFlag}}" title="解决问题">
+          <wux-cell is-link title="解决问题" extra="{{ targetVistInfo.solveProductConceptResultTitle }}" bind:click="solveReportSelect" />
+          <!-- <wux-cell is-link title="打报告同意与否" extra="{{ solveReportFlagTitle }}" bind:click="agreementSelect" data-flag="isSolveReportFlagAgree" data-key="solveReportFlag" data-title="solveReportFlagTitle" data-values="solveReportFlagResetValues" data-wuxselecttitle="打报告同意与否" />
+          <block wx:if="{{isSolveReportFlagAgree !== null && isSolveReportFlagAgree}}">
+            <wux-cell class="relative-position" is-link title="同意打报告时间" extra="{{ formData.solveReportResult }}">
+              <picker mode="multiSelector" class="absolute-top full-height" bindchange="timePikerChange" data-key="solveReportResult" data-title="solveReportResultTitle" bindcolumnchange="timePikerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+                <view class="picker absolute-top full-height" style="z-index: 1;" />
+              </picker>
+            </wux-cell>
+          </block>
+
+          <wux-cell is-link title="帮忙组织会议同意与否" extra="{{ solveOrganizationMeetingFlagTitle }}" bind:click="agreementSelect" data-flag="issolveOrganizationMeetingFlagAgree" data-key="solveOrganizationMeetingFlag" data-title="solveOrganizationMeetingFlagTitle" data-values="solveOrganizationMeetingFlagResetValues" data-wuxselecttitle="帮忙组织会议同意与否" /> -->
+        </wux-cell-group>
+
+        <view wx:if="{{!isFinished}}" class="row justify-center">
+          <view class="col-4">
+            <wux-button block type="stable" bindtap="cancleEdit">取消</wux-button>
+          </view>
+          <view class="col-4 wux-ml--20">
+            <wux-button wx:if="{{!isFinished}}" block type="balanced" bindtap="finishCoVisit">完成协访</wux-button>
+          </view>
+        </view>
+      </view>
+    </wux-card>
+  </view>
+
+
+<!-- 拜访目的 -->
+<wux-select id="purpose" class="data-frozen" />
+
+<!-- 会议类型 -->
+<wux-select id="conferenceType" class="data-frozen" />
+
+<!-- 客情关系 -->
+<wux-select id="customerRelationship" class="data-frozen" />
+
+<!-- 协访目的 -->
+<wux-select id="coPurpose" class="data-frozen" />
+
+<!-- 检查（是否) -->
+<wux-select id="checkUpFlag" class="{{isFinished ? 'data-frozen': ''}}" />
+
+<!-- 检查否认(结果 用逗号隔开) -->
+<wux-select id="checkUpResult" class="{{isFinished ? 'data-frozen': ''}}" />
+
+<!-- 辅导结果 -->
+<wux-select id="assistResult" class="{{isFinished ? 'data-frozen': ''}}" />
+
+<!-- 达成与否 -->
+<wux-select id="reach" class="{{isFinished ? 'data-frozen': ''}}" />
+
+<!-- 同意与否 -->
+<wux-select id="agreement" class="{{isFinished ? 'data-frozen': ''}}" />
+
+<!-- 解决问题 -->
+<wux-select id="solveProductConceptResult" class="{{isFinished ? 'data-frozen': ''}}" />

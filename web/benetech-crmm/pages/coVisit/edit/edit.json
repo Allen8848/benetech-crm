@@ -1,0 +1,19 @@
+{
+  "navigationBarTitleText": "编辑协访",
+  "usingComponents": {
+    "wux-row": "../../../dist/row/index",
+    "wux-col": "../../../dist/col/index",
+    "wux-accordion-group": "../../../dist/accordion-group/index",
+    "wux-accordion": "../../../dist/accordion/index",
+    "wux-cell-group": "../../../dist/cell-group/index",
+    "wux-cell": "../../../dist/cell/index",
+    "wux-button": "../../../dist/button/index",
+    "wux-select": "../../../dist/select/index",
+    "wux-input": "../../../dist/input/index",
+    "wux-input-number": "../../../dist/input-number/index",
+    "wux-card": "../../../dist/card/index",
+    "wux-wing-blank": "../../../dist/wing-blank/index",
+    "wux-white-space": "../../../dist/white-space/index",
+    "wux-switch": "../../../dist/switch/index"
+  }
+}

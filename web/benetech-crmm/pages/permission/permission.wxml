@@ -1,0 +1,39 @@
+<!--pages/permission/permission.wxml-->
+<!-- <view wx:if="{{isShow}}" class="column justify-center full-height">
+  <view class="wux-pr--20 wux-pl--20" wx:if="{{!hasUserInfo && canIUse}}">
+    <text class="text">盛蕴CRM在使用过程中需要使用你的微信名称、地理位置</text>
+    <button type='primary' class="wux-mt--20 wux-mb--20" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 受权并使用 </button>
+  </view>
+  <view  class="wux-pr--20 wux-pl--20">
+    <text>盛蕴CRM需要您授权以下权限才能继续</text>
+    <wux-white-space size="large" />
+    <view class="wux-pb--5" wx:for="{{permissionList}}" wx:key="">
+      <icon type="success" color="{{item.value ? '' : 'red'}}" size="12" class="wux-mr--5" />
+      <text>{{item.info}}</text>
+    </view>
+    <button type='primary' class='wux-mt--20' open-type="openSetting" bindopensetting="validatePermission">去授权</button>
+  </view>
+</view> -->
+<!-- <button  type='primary' class='wux-mt--20' open-type="openSetting" bindopensetting="validatePermission">去授权</button> -->
+
+<view wx:if="{{isShow}}" class="column justify-center full-height">
+  <!-- 获取用户信息需要需要用户主动点击按钮才能触发 -->
+  <view wx:if="{{hasUserInfo != null && hasUserInfo === false}}" class="wux-pr--20 wux-pl--20">
+    <text class="text">盛蕴CRM在使用过程中需要使用你的微信名称、地理位置</text>
+    <button type='primary' class="wux-mt--20 wux-mb--20" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 接受并使用 </button>
+  </view>
+  <view wx:if="{{getPermissionSucessed != null && getPermissionSucessed === false}}" class="wux-pr--20 wux-pl--20">
+    <text>盛蕴CRM需要您授权以下权限才能继续</text>
+    <wux-white-space size="large" />
+    <view class="wux-pb--5" wx:for="{{permissionList}}" wx:key="">
+      <icon type="success" color="{{item.value ? '' : 'red'}}" size="12" class="wux-mr--5" />
+      <text>{{item.info}}</text>
+    </view>
+    <button type='primary' class='wux-mt--20' open-type="openSetting" bindopensetting="validatePermission">去授权</button>
+  </view>
+</view>
+<view wx:else class="column justify-center full-height">
+  <text class="full-width text-center">盛蕴CRM正在打开中...</text>
+</view>
+
+

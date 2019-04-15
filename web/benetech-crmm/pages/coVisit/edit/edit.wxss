@@ -1,0 +1,12 @@
+/* pages/coVisit/edit/edit.wxss */
+.data-frozen button {
+  pointer-events: none;
+}
+
+.wux-cell__bd > .wux-cell__text {
+  white-space: nowrap;
+}
+
+.wux-cell__bd + .wux-cell__ft {
+  padding-left: 2em;
+}
